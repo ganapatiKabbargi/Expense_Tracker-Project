@@ -1,0 +1,79 @@
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items:flex-start;
+   }
+   h1{
+       text-align: center;
+       font-family: sans-serif;
+   }
+  .form{
+   background-color: rgb(229, 221, 64);
+   width: 500px;
+   padding: 20px;
+   border-radius: 20px;
+  }
+  form label{
+   font-size: 20px;
+   color: rgb(65, 65, 65);
+  }
+  form input{
+   
+   width: 96%;
+   padding:8px;
+   display: inline;
+   border: 1px solid lightgray;
+   border-radius: 5px;
+  }
+  .btn{
+   display: inline;
+   padding: 12px 0px;
+   width :100%;
+   margin-top: 5px;
+   border-style: none;
+   background-color: rgb(19, 167, 154);
+   border-radius: 5px;
+   font-size: 20px;
+   color: #fff;
+   cursor: pointer;
+  }
+  #category{
+   width:100%;
+   padding:8px;
+   display: inline;
+   border: 1px solid lightgray;
+   border-radius: 5px;
+  }
+  .expence-list{
+   padding: 0px;
+  }
+  .expence-list li{
+    display: flex;
+    justify-content: space-between;
+   align-items: center;
+   background-color: rgb(229, 221, 64);
+   list-style:none;
+   margin-bottom: 5px;
+   padding: 8px 12px;
+   border-radius: 10px;
+   font-size: 18px;  
+  }
+  .edit{
+    text-decoration: none;
+    padding: 5px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: green;
+    color: #fff;
+    margin-right: 10px;
+    margin-left: 30px;  
+ }
+ .delete{
+    text-decoration: none;
+    padding: 5px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: red;
+    color: #fff; 
+ }
