@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", onReload)
 
 function addexpence(e){
     e.preventDefault()
-    if(amountEl.value === "" || descriptionEl.value ===""){
+    if(amountEl.value === "" || descriptionEl.value === ""){
         alert("Please fill all the details")
     }else {
     const expenseObj={
@@ -19,44 +19,50 @@ function addexpence(e){
         description :descriptionEl.value,
         category : categoryEl.value
     }
-    localStorage.setItem((expenseObj.description) , JSON.stringify(expenseObj))
-    createLi(expenseObj)
+    axios.post("https://crudcrud.com/api/1d252619bc984b488404f912aad28dc8/ExpenseData",expenseObj)
+    .then((response)=>{
+        createLi(response.data)
+    })
+    
     amountEl.value=" ";
     descriptionEl.value=" ";
     }
 }
 
-function createLi(expObj){
-    if(localStorage.getItem(expObj.description) !==null){
-        removeFromScreen(expObj.description)
-    }
-    let parsedExpObj=JSON.parse(localStorage.getItem(expObj.description))
-    ul.innerHTML=ul.innerHTML+`<li id="${parsedExpObj.description}"> ${parsedExpObj.amount} - ${parsedExpObj.category} - ${parsedExpObj.description} <div><button class="edit" onclick="edit('${parsedExpObj.description}')">Edit Expense</button><button class="delete" onclick="del('${parsedExpObj.description}')">Delete Expense</button></div></li>`;
+function createLi(data){
+    ul.innerHTML=ul.innerHTML+`<li id="${data._id}"> ${data.amount} - ${data.category} - ${data.description} <div><button class="edit" onclick="edit('${data._id}')">Edit Expense</button><button class="delete" onclick="del('${data._id}')">Delete Expense</button></div></li>`;
 }
 
-function edit(obj){
-    let parsedObj=JSON.parse(localStorage.getItem(obj))
-    localStorage.removeItem(obj);
-    amountEl.value=parsedObj.amount;
-    descriptionEl.value=parsedObj.description;
-    removeFromScreen(obj);
+function edit(id){
+    axios.get(`https://crudcrud.com/api/1d252619bc984b488404f912aad28dc8/ExpenseData/${id}`)
+    .then((response)=>{
+        amountEl.value=response.data.amount;
+        descriptionEl.value=response.data.description;
+    })
+    .catch((err)=> console.log(err))
+   
+    del(id)
 }
 
-function del(obj){
-    localStorage.removeItem(obj);
-    removeFromScreen(obj);
+function del(id){
+    axios.delete(`https://crudcrud.com/api/1d252619bc984b488404f912aad28dc8/ExpenseData/${id}`)
+    removeFromScreen(id);
 }
 
-function removeFromScreen(obj){
-    liToBeRemoved=document.getElementById(obj);
+function removeFromScreen(id){
+    liToBeRemoved=document.getElementById(id);
     if(liToBeRemoved){
         ul.removeChild(liToBeRemoved) 
     } 
 }
 
 function onReload(){
-    Object.keys(localStorage).forEach((key)=>{
-        let expenceinfo=JSON.parse(localStorage.getItem(key))
-        createLi(expenceinfo)        
+    axios.get("https://crudcrud.com/api/1d252619bc984b488404f912aad28dc8/ExpenseData")
+    .then((response)=>{
+        (response.data).forEach((data)=>{
+            createLi(data)        
+        })
     })
+    .catch((err)=> console.log(err))
+   
 }
